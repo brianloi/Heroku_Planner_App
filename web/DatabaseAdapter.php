@@ -6,9 +6,9 @@ class DatabaseAdaptor {
 	private $DB;
 	// Make a connection to the data based named 'imdb_small' (described in project).
 	public function __construct() {
-		$db = 'mysql:dbname=planner;host=127.0.0.1;charset=utf8';
-		$user = 'root';
-		$password = '';
+		$db = 'pgsql:dbname=d7lv059jrun0qp;host=ec2-107-22-174-187.compute-1.amazonaws.com;charset=utf8';
+		$user = 'jnlyavoramahyo';
+		$password = '0a9f396b64d85fa2cd877f54df7f0953da965940aeffb3ed1895b163a7e5a1a3';
 		
 		try {
 			$this->DB = new PDO ( $db, $user, $password );
