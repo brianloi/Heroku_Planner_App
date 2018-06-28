@@ -7,7 +7,7 @@ class DatabaseAdaptor {
 	// Make a connection to the data based named 'imdb_small' (described in project).
 	public function __construct() {
 		
-		$dbstr = getenv('CLEARDB_DATABASE_URL');
+		$dbstr = getenv('DATABASE_URL');
 		$dbstr = substr("$dbstr", 8);
 		$dbstrarruser = explode(":", $dbstr);
 		//Please don't look at these names. Yes I know that this is a little bit trash :D
