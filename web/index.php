@@ -136,6 +136,7 @@ session_start ();
 		var password = document.getElementById("password");
 		var divChange = document.getElementById("loginError");
 		function login() {
+			alert("here")
 			var ajax = new XMLHttpRequest();
 			ajax.open("POST", "controller.php", true);
 			ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
