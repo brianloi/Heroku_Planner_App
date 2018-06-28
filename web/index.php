@@ -144,7 +144,6 @@ session_start ();
 				if (ajax.readyState == 4 && ajax.status == 200) {
 		//If failed, echo back an error, else if succeed, use window.location?
 					var error = ajax.responseText;
-					alert(error);
 					if (error == "1") {
 						var str = "Invalid Username or Password";
 						divChange.innerHTML = str;
