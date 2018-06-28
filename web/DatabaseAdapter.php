@@ -6,12 +6,30 @@ class DatabaseAdaptor {
 	private $DB;
 	// Make a connection to the data based named 'imdb_small' (described in project).
 	public function __construct() {
-		$db = 'pgsql:dbname=d7lv059jrun0qp;host=ec2-107-22-174-187.compute-1.amazonaws.com;charset=utf8';
-		$user = 'jnlyavoramahyo';
-		$password = '0a9f396b64d85fa2cd877f54df7f0953da965940aeffb3ed1895b163a7e5a1a3';
+		
+		$dbstr = getenv('CLEARDB_DATABASE_URL');
+		$dbstr = substr("$dbstr", 8);
+		$dbstrarruser = explode(":", $dbstr);
+		//Please don't look at these names. Yes I know that this is a little bit trash :D
+		$dbstrarrhost = explode("@", $dbstrarruser[1]);
+		$dbstrarrrecon = explode("?", $dbstrarrhost[1]);
+		$dbstrarrport = explode("/", $dbstrarrrecon[0]);
+		$dbpassword = $dbstrarrhost[0];
+		$dbhost = $dbstrarrport[0];
+		$dbport = $dbstrarrport[0];
+		$dbuser = $dbstrarruser[0];
+		$dbname = $dbstrarrport[1];
+		unset($dbstrarrrecon);
+		unset($dbstrarrport);
+		unset($dbstrarruser);
+		unset($dbstrarrhost);
+		unset($dbstr);
+
+		$dbanfang = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
+		//$db = new PDO($dbanfang, $dbuser, $dbpassword);
 		
 		try {
-			$this->DB = new PDO ( $db, $user, $password );
+			$this->DB = new PDO($dbanfang, $dbuser, $dbpassword);
 			$this->DB->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		} catch ( PDOException $e ) {
 			echo ('Error establishing Connection');
