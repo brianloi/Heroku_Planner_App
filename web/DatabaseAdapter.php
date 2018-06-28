@@ -6,35 +6,25 @@ class DatabaseAdaptor {
 	private $DB;
 	// Make a connection to the data based named 'imdb_small' (described in project).
 	public function __construct() {
-		
-		$dbstr = getenv('DATABASE_URL');
-		$dbstr = substr("$dbstr", 8);
-		$dbstrarruser = explode(":", $dbstr);
-		//Please don't look at these names. Yes I know that this is a little bit trash :D
-		$dbstrarrhost = explode("@", $dbstrarruser[1]);
-		$dbstrarrrecon = explode("?", $dbstrarrhost[1]);
-		$dbstrarrport = explode("/", $dbstrarrrecon[0]);
-		$dbpassword = $dbstrarrhost[0];
-		$dbhost = $dbstrarrport[0];
-		$dbport = $dbstrarrport[0];
-		$dbuser = $dbstrarruser[0];
-		$dbname = $dbstrarrport[1];
-		unset($dbstrarrrecon);
-		unset($dbstrarrport);
-		unset($dbstrarruser);
-		unset($dbstrarrhost);
-		unset($dbstr);
+		$url = getenv('JAWSDB_MARIA_URL');
+		$dbparts = parse_url($url);
 
-		$dbanfang = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
-		//$db = new PDO($dbanfang, $dbuser, $dbpassword);
-		
+		$hostname = $dbparts['host'];
+		$username = $dbparts['user'];
+		$password = $dbparts['pass'];
+		$database = ltrim($dbparts['path'],'/');
+
 		try {
-			$this->DB = new PDO($dbanfang, $dbuser, $dbpassword);
-			$this->DB->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-		} catch ( PDOException $e ) {
-			echo ('Error establishing Connection');
-			exit ();
-		}
+		    $conn = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
+		    // set the PDO error mode to exception
+		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    echo "Connected successfully";
+		    }
+		catch(PDOException $e)
+		    {
+		    echo "Connection failed: " . $e->getMessage();
+		    }
+
 	}
 	
 	public function findCourses($search) {
