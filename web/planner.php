@@ -211,7 +211,6 @@ function showDetails(dateId) {
 										+ "<a href="+ results[0]["link"] +">"
 										+ "</a>"
 										);
-				alert("work?");
 			}
 		}
 	}
